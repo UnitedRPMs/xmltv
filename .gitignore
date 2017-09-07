@@ -1,3 +1,9 @@
-xmltv-0.5.67.tar.bz2
-/xmltv-0.5.68.tar.bz2
-/xmltv-0.5.69.tar.bz2
+BUILD/*
+BUILDROOT/*
+RPMS/*
+SPECS/*
+SRPMS/*
+*.rpm
+xmltv*.tar.bz2
+.directory
+*.rpm
