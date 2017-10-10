@@ -1,6 +1,6 @@
 Name:           xmltv
 Version:        0.5.69
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A set of utilities to manage your TV viewing
 
 Group:          Development/Libraries
@@ -95,7 +95,6 @@ read and write XML documents.
 %package -n perl-XMLTV
 Summary: Perl modules for managing your TV viewing
 Group: System Environment/Libraries
-Requires: perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %description -n perl-XMLTV
 XMLTV is a set of utilities to manage your TV viewing. They work with
@@ -249,6 +248,10 @@ make test
 
 
 %changelog
+
+* Tue Oct 10 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.5.69-2
+- Rebuilt for perl
+
 * Tue Jan 24 2017 Richard Shaw <hobbes1069@gmail.com> - 0.5.69-1
 - Update to latest upstream release.
 
