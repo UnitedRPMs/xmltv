@@ -1,5 +1,5 @@
 Name:           xmltv
-Version:        0.5.69
+Version:        0.5.70
 Release:        2%{?dist}
 Summary:        A set of utilities to manage your TV viewing
 
@@ -248,6 +248,9 @@ make test
 
 
 %changelog
+
+* Sun Dec 10 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.5.70-2
+- Updated to 0.5.70
 
 * Tue Oct 10 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.5.69-2
 - Rebuilt for perl
