@@ -1,16 +1,17 @@
 Name:           xmltv
-Version:        0.5.70
+Version:        0.6.1
 Release:        2%{?dist}
 Summary:        A set of utilities to manage your TV viewing
 
 Group:          Development/Libraries
 License:        GPLv2+
 URL:            http://xmltv.org/wiki/
-Source0:        http://downloads.sourceforge.net/xmltv/xmltv-%{version}.tar.bz2
+Source0:        https://github.com/XMLTV/xmltv/archive/v%{version}.tar.gz
 Patch0:         xmltv-0.5.63-noask.patch
 
 BuildArch:     noarch
 
+BuildRequires: perl-devel
 %if 0%{?fedora}
 BuildRequires: perl-generators
 %endif
@@ -143,11 +144,6 @@ This package contains graphical frontends to xmltv.
 # Fix line endings
 sed -i 's/\r//' grab/ch_search/tv_grab_ch_search.in
 
-# Fix encoding
-cp -pr ChangeLog ChangeLog.not-utf8
-iconv -f ISO_8859-1 -t UTF8 ChangeLog.not-utf8 > ChangeLog
-touch -r ChangeLog.not-utf8 ChangeLog
-rm ChangeLog.not-utf8
 
 # We filter theses from perl-XMLTV as it already has the infra
 #for the tui/gui test. And then xmltv-gui will request perl(Tk::TableMatrix)
@@ -177,16 +173,23 @@ chmod +x %{name}-req
 %endif
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor
-make %{?_smp_mflags}
+
+  unset PERL5LIB PERL_MM_OPT PERL_LOCAL_LIB_ROOT
+  export PERL_MM_USE_DEFAULT=1 PERL_AUTOINSTALL=--skipdeps
+  %{__perl} Makefile.PL INSTALLDIRS=vendor
+
+  make %{?_smp_mflags}
 
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
+
+  unset PERL5LIB PERL_MM_OPT PERL_LOCAL_LIB_ROOT
+  make install DESTDIR=$RPM_BUILD_ROOT
+
+  find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
 
 # Fix perms
-chmod 0755 $RPM_BUILD_ROOT%{_bindir}/*
+  chmod 0755 $RPM_BUILD_ROOT%{_bindir}/*
 
 
 %check
@@ -194,7 +197,7 @@ make test
 
 
 %files
-%doc ChangeLog README
+%doc Changes README
 %doc doc/*
 %{_bindir}/tv_augment
 %{_bindir}/tv_cat
@@ -214,6 +217,10 @@ make test
 %{_bindir}/tv_augment_tz
 %{_bindir}/tv_count
 %{_bindir}/tv_merge
+%{_libdir}/perl5/perllocal.pod
+#{_libdir}/perl5/vendor_perl/auto/XMLTV/.packlist
+%{_docdir}/xmltv-*/
+%{_datadir}/xmltv/
 %{_mandir}/man1/tv_augment.1*
 %{_mandir}/man1/tv_count.1*
 %{_mandir}/man1/tv_merge.1*
@@ -248,6 +255,9 @@ make test
 
 
 %changelog
+
+* Tue Mar 05 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.6.1-2
+- Updated to 0.6.1
 
 * Sun Dec 10 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.5.70-2
 - Updated to 0.5.70
