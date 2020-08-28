@@ -4,6 +4,6 @@ RPMS/*
 SPECS/*
 SRPMS/*
 *.rpm
-xmltv*.tar.bz2
+*.tar.bz2
 .directory
 *.rpm

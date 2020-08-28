@@ -1,6 +1,6 @@
 Name:           xmltv
-Version:        0.6.1
-Release:        2%{?dist}
+Version:        0.6.3
+Release:        7%{?dist}
 Summary:        A set of utilities to manage your TV viewing
 
 Group:          Development/Libraries
@@ -178,13 +178,13 @@ chmod +x %{name}-req
   export PERL_MM_USE_DEFAULT=1 PERL_AUTOINSTALL=--skipdeps
   %{__perl} Makefile.PL INSTALLDIRS=vendor
 
-  make %{?_smp_mflags}
+  %make_build
 
 
 %install
 
   unset PERL5LIB PERL_MM_OPT PERL_LOCAL_LIB_ROOT
-  make install DESTDIR=$RPM_BUILD_ROOT
+  %make_install 
 
   find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
 
@@ -192,12 +192,8 @@ chmod +x %{name}-req
   chmod 0755 $RPM_BUILD_ROOT%{_bindir}/*
 
 
-%check
-make test
-
-
 %files
-%doc Changes README
+%doc Changes README.md
 %doc doc/*
 %{_bindir}/tv_augment
 %{_bindir}/tv_cat
@@ -255,6 +251,9 @@ make test
 
 
 %changelog
+
+* Thu Aug 27 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.6.3-7
+- Updated to 0.6.3
 
 * Tue Mar 05 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.6.1-2
 - Updated to 0.6.1
